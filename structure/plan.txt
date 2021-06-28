@@ -1,0 +1,84 @@
+
+Version 1
+
+##functionalities
+- place Xs and Os
+- player 1 and 2 alternate playing x, display text of who's turn it is
+- when 3 are aligned, a card pops up and winner recieves a point
+- if nothing aligns, then it's a draw and a point is added to draw
+- button to reset all stats (winner points and draw points, clear the board)
+- button to clear the board
+
+##functions
+move() :: saves boxId and checks counter, even or odd, to decide if player1 or player2 made the move. 
+    makeMove(boxId, player);
+    counter++;
+    checkWinner(player);
+    whosTurn();
+    runs on click
+
+whosTurn() :: displays text based on whose turn it is;
+
+madeMove(boxId, player) :: player move
+    adds icon to boxId in grid
+    pushes boxId to playerArray
+
+checkWinner(player) :: if playerArray contains(
+        3 of same nr ||
+        3 of same letter ||
+        3 different nr ||
+        3 different letter
+        )
+    winnerCard(player)
+    whoPlaysX++;
+
+winnerCard(player) :: creates display of who won and adds point to the counter
+    create card which disappears on click on screen
+    clearBoard()
+
+clearBoard() :: clears arrays and grid from Xs & Os
+
+reset() :: clears board and stats
+    clearBoard();
+    reset X points, O points and tie points
+
+
+## global variables
+whoPlaysX = 1; if counter is even, player1 is X
+
+
+##CSS
+grid 3x3
+grid-area:
+    "a3 b3 c3
+    a2 b2 c2
+    a1 b1 c1";
+
+
+
+///********************************//
+
+Version 2
+
+##functionalities
+- in turn place X and O. when 3 align, winner or draw recieves a point. reset and clear board buttons
+- play against computer, flip switch. cog wheel to choose difficulty (easy, medium, hard);
+
+##functions
+easyMove() :: computer places at random;
+
+mediumMove() :: computer either places at random or actively tries to block
+
+hardMove() :: computer places in middle if x, computer places in corner on second
+    scans player1 array to block moves
+
+## global variables
+whoPlaysX
+
+##CSS
+grid 3x3
+grid-area:
+    "a3 b3 c3
+    a2 b2 c2
+    a1 b1 c1";
+
