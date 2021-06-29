@@ -1,1 +1,175 @@
 
+#game-screen{
+    display: none;
+}
+#settings-screen{
+    /* display: none; */
+}
+#reset-screen{
+    display: none;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,500;1,500&display=swap');
+
+:root{
+    --main: #084C61;
+    --comp: #FDC10D;
+    --accent: #E8283F;
+    --white: #FAF9F6;
+    --black: #22201C;
+    --neutLite: #E8E6DF;
+    --neutMed: #C6C5C2;
+    --neutDark: #8E8D8A;
+
+    --szL: 35px;
+    --szM: 25px;
+    --szS:15px;
+    --szXS:10px;
+}
+
+.font-m{font-size: 18px}
+.font-s{font-size: 14px}
+.font-l{font-size: 36px}
+
+*{
+    margin: 0;
+    box-sizing: border-box;
+    color: var(--white);
+    font-family: 'Josefin Sans', sans-serif;
+    text-transform: uppercase;
+}
+
+/* // GENERAL COMPONENTS // */
+
+button{
+    padding: 5px 25px;
+    height: 50px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition-property: color, background-color;
+    transition-duration: 0.1s;
+    width: auto;
+}
+
+button:hover{
+    background-color: var(--black);
+    color: var(--white);
+}
+
+
+.accent-button{
+    background-color: var(--accent);
+    color: var(--white);
+}
+
+.comp-button{
+    background-color: var(--comp);
+    color: var(--main);
+}
+
+.outline-button{
+    border: 2px solid var(--main);
+    color: var(--main);
+}
+
+/* // GENERAL LAYOUT // */
+
+body{
+    background-color: var(--main);
+    padding: var(--szM) var(--szS) var(--szS) var(--szS);
+    height: 100vh;
+    
+}
+
+body header{
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: var(--szL);
+}
+
+
+/* // GAME SCREEN SPECIFICS // */
+
+#match-history{
+    display: flex;
+    gap: var(--szL);
+}
+
+body main > *{
+    margin-bottom: var(--szXS);
+}
+
+#grid{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 50px);
+
+}
+
+#grid > div{--border: 2px solid var(--white);}
+#grid div:nth-child(3n){border-left: var(--border)}
+#grid div:nth-child(3n+1){border-right: var(--border)}
+#grid div:nth-child(-n+3){border-bottom: var(--border)}
+#grid div:nth-child(-n+3){border-bottom: var(--border)}
+#grid div:nth-child(6)~div{border-top: var(--border)}
+
+#scores{
+    display: flex;
+}
+
+.player{
+    flex-grow: 1;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.player .active{
+    color: var(--comp);
+}
+
+/* // SETTINGS SCREEN SPECIFICS // */
+
+/* close icon flex right */
+#settings-screen header{
+    justify-content: flex-end;
+}
+
+#settings section, #settings section > div{
+    display: flex;
+    flex-direction: column;
+    gap: var(--szS);
+}
+#settings section > div{
+    gap: var(--szXS);
+}
+
+#switch{
+    width: 100px;
+    padding: 5px ;
+    border-radius: 50px;
+    border: 2px solid var(--white);
+
+    position: relative;
+    cursor: pointer;
+}
+
+#switch > div{
+    position: relative;
+    left: 0px;
+
+    height: var(--szM);
+    width: var(--szM);
+    background-color: var(--white);
+    border-radius: 50px;
+
+    transition-property: left;
+    transition-duration: 0.1s;
+    transition-timing-function: ease-out;
+}
+
+#switch .active{
+    left: calc( 100% - var(--szM) );
+}
