@@ -45,6 +45,8 @@ reset() :: clears board and stats
 
 ## global variables
 whoPlaysX = 1; if counter is even, player1 is X
+player1 :: moves
+player2 :: moves
 
 
 ##CSS
@@ -74,6 +76,39 @@ hardMove() :: computer places in middle if x, computer places in corner on secon
 
 ## global variables
 whoPlaysX
+player1 
+player2 
+
+##CSS
+grid 3x3
+grid-area:
+    "a3 b3 c3
+    a2 b2 c2
+    a1 b1 c1";
+
+
+///********************************//
+
+Version 2
+
+##functionalities
+- functioning tic tac toe with aility to play against computer
+- undo and redo buttons
+
+##functions
+easyMove() :: computer places at random;
+
+mediumMove() :: computer either places at random or actively tries to block
+
+hardMove() :: computer places in middle if x, computer places in corner on second
+    scans player1 array to block moves
+
+## global variables
+whoPlaysX = 0;
+player1 {}
+player2 {}
+roundHistory{}
+
 
 ##CSS
 grid 3x3
