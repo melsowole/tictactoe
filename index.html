@@ -9,8 +9,8 @@
 </head>
 <body>
     <div id="game-screen">
-        <header>
-            <div id="match-history">
+        <header class="space-between">
+            <div id="match-history" class="flex">
                 <svg id="undo-button" width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M24 8.7025L21.336 6L10 17.5L21.336 29L24 26.2975L15.3468 17.5L24 8.7025Z" fill="#FAF9F6"/>
                 </svg>
@@ -39,7 +39,7 @@
                 <div></div>
             </section>
 
-            <section id="scores">
+            <section id="scores" class="flex">
                 <div id="p1" class="player">
                     <div id="p1-name" class="font-m active">Player 1</div>
                     <div id="p1-score" class="font-l">-</div>
@@ -56,7 +56,7 @@
     </div>
 
     <div id="settings-screen">
-        <header>
+        <header class="flex-end">
             <svg id="close-button" width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M27.7083 9.34791L25.652 7.29166L17.5 15.4437L9.34788 7.29166L7.29163 9.34791L15.4437 17.5L7.29163 25.6521L9.34788 27.7083L17.5 19.5562L25.652 27.7083L27.7083 25.6521L19.5562 17.5L27.7083 9.34791Z" fill="#FAF9F6"/>
             </svg> 
@@ -64,7 +64,7 @@
 
         <main id="settings">
             <section id="ai">
-                <div>
+                <div class="flex space-between align-center">
                     <span class="font-m">play against computer</span>
                     <div id="switch">
                         <div class="active" ></div>
@@ -73,9 +73,9 @@
 
                 <div id="difficulties">
                     <div class="font-m">difficulty</div>
-                    <div>
+                    <div class="flex space-between">
                         <span id="easy" class="font-s">easy</span>
-                        <span id="medium" class="font-s">medium</span>
+                        <span id="medium" class="font-s active">medium</span>
                         <span id="hard" class="font-s">hard</span>
                     </div>
                 </div>
@@ -85,13 +85,15 @@
         </main>
     </div>
 
-    <div id="reset-screen">
-        <div id=""card>
-            <p class="font-m">Are you sure you want to reset the current game scores</p>
-            <p class="font-s">This action cannot be undone</p>
-            <div>
-                <button class="accent-button font-m">Reset</button>
-                <button class="outline-button ">Cancel</button>
+    <div id="reset-screen" class="flex justify-center align-center">
+        <div class="card">
+            <div class="reset-text">
+                <p class="font-m">Are you sure you want to reset the current game scores</p>
+                <p class="font-s">This action cannot be undone</p>
+            </div>
+            <div class="flex space-between">
+                <button id="reset-button" class="accent-button font-m">Reset</button>
+                <button id="cancel-button" class="outline-button ">Cancel</button>
             </div>
         </div>
     </div>

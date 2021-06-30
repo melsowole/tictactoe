@@ -9,7 +9,7 @@
     display: none;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,500;1,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alata&display=swap');
 
 :root{
     --main: #084C61;
@@ -17,10 +17,12 @@
     --accent: #E8283F;
     --white: #FAF9F6;
     --black: #22201C;
+    --blackOverlay:#22201c60;
     --neutLite: #E8E6DF;
     --neutMed: #C6C5C2;
     --neutDark: #8E8D8A;
 
+    --szXL: 55px;
     --szL: 35px;
     --szM: 25px;
     --szS:15px;
@@ -35,9 +37,16 @@
     margin: 0;
     box-sizing: border-box;
     color: var(--white);
-    font-family: 'Josefin Sans', sans-serif;
+    font-family: 'Alata', sans-serif;;
     text-transform: uppercase;
 }
+
+.flex{display: flex;}
+.column{flex-direction: column;}
+.justify-center{justify-content: center;}
+.align-center{align-items: center;}
+.space-between{justify-content: space-between;}
+.flex-end{justify-content: flex-end;}
 
 /* // GENERAL COMPONENTS // */
 
@@ -79,20 +88,23 @@ body{
     background-color: var(--main);
     padding: var(--szM) var(--szS) var(--szS) var(--szS);
     height: 100vh;
-    
+    position: relative;
+}
+
+/* gives spacing between main items  */
+body > div > main > *:not(:last-child){
+    margin-bottom: var(--szL);
 }
 
 body header{
-    display: flex;
-    justify-content: space-between;
     padding-bottom: var(--szL);
+    display: flex;
 }
 
 
 /* // GAME SCREEN SPECIFICS // */
 
 #match-history{
-    display: flex;
     gap: var(--szL);
 }
 
@@ -115,10 +127,6 @@ body main > *{
 #grid div:nth-child(-n+3){border-bottom: var(--border)}
 #grid div:nth-child(6)~div{border-top: var(--border)}
 
-#scores{
-    display: flex;
-}
-
 .player{
     flex-grow: 1;
     text-align: center;
@@ -132,18 +140,8 @@ body main > *{
 
 /* // SETTINGS SCREEN SPECIFICS // */
 
-/* close icon flex right */
-#settings-screen header{
-    justify-content: flex-end;
-}
-
-#settings section, #settings section > div{
-    display: flex;
-    flex-direction: column;
-    gap: var(--szS);
-}
-#settings section > div{
-    gap: var(--szXS);
+#settings section > *:not(:last-child){
+    margin-bottom: var(--szXS);
 }
 
 #switch{
@@ -173,3 +171,33 @@ body main > *{
 #switch .active{
     left: calc( 100% - var(--szM) );
 }
+
+#difficulties *{
+    color: var(--neutDark) !important;
+}
+
+#difficulties .active{color: var(--comp);}
+
+
+/* // RESET SCREEN SPECIFICS // */
+#reset-screen{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: var(--blackOverlay);
+}
+
+#reset-screen .card{
+    background-color: var(--white);
+    border-radius: 5px;
+    padding: var(--szXL) var(--szL);
+
+    display: grid;
+    gap: var(--szL);
+
+}
+
+.reset-text p:first-child{padding-bottom: var(--szXS);}
+.reset-text p{color: var(--black);}
