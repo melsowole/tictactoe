@@ -1,14 +1,4 @@
 
-#game-screen{
-    display: none;
-}
-#settings-screen{
-    /* display: none; */
-}
-#reset-screen{
-    display: none;
-}
-
 @import url('https://fonts.googleapis.com/css2?family=Alata&display=swap');
 
 :root{
@@ -99,6 +89,7 @@ body > div > main > *:not(:last-child){
 body header{
     padding-bottom: var(--szL);
     display: flex;
+    flex-direction: row-reverse;
 }
 
 
