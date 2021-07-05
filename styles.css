@@ -79,6 +79,9 @@ body{
     padding: var(--szM) var(--szS) var(--szS) var(--szS);
     height: 100vh;
     position: relative;
+
+    max-width: 800px;
+    margin: auto;
 }
 
 /* gives spacing between main items  */
@@ -107,16 +110,26 @@ body main > *{
     width: 100%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 50px);
+    grid-template-rows: repeat(3, 1fr);
 
 }
 
-#grid > div{--border: 2px solid var(--white);}
+#grid > div{
+    --border: 2px solid var(--white);
+
+    display: grid;
+    place-content: center;
+    padding: var(--szM);
+}
 #grid div:nth-child(3n){border-left: var(--border)}
 #grid div:nth-child(3n+1){border-right: var(--border)}
 #grid div:nth-child(-n+3){border-bottom: var(--border)}
 #grid div:nth-child(-n+3){border-bottom: var(--border)}
 #grid div:nth-child(6)~div{border-top: var(--border)}
+
+#grid svg{
+    height: 50%;
+}
 
 .player{
     flex-grow: 1;

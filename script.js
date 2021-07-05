@@ -1,10 +1,14 @@
 "use strict";
 
 const body = document.body;
-let player1 = "Hanna";
-let player2 = "Lars";
+
+let player1 = [];
+let player2 = [];
 let playerScore1 = 0;
 let playerScore2 = 0;
+
+let altTurn = 0;
+let altRound = 0;
 
 
 function gameScreenDOM(){
@@ -26,6 +30,7 @@ function gameScreenDOM(){
 
     // *----- MAIN -----*   
     let main = document.createElement("main");
+    // main.style.alignSelf = "center";
     
     let rounds = document.createElement("div");
     rounds.textContent = "Round: ";
@@ -38,7 +43,14 @@ function gameScreenDOM(){
     function createGrid(){
         let grid = document.createElement("div");
         grid.setAttribute("id", "grid");
-    
+        setWidthAndHeight()
+
+        window.addEventListener('resize', setWidthAndHeight);
+
+        function setWidthAndHeight(){
+            grid.style.height = body.clientWidth - (parseInt(getComputedStyle(body).paddingLeft) * 2) + "px";
+        }
+        
         let number = 0;
         let letter;
         let counter = 1;
@@ -52,9 +64,30 @@ function gameScreenDOM(){
     
             let box = document.createElement("div");
             let coordinate = letter + number;
-            box.innerText = coordinate;
+            // box.setAttribute("id", coordinate);
     
             counter == 3 ? counter = 1 : counter++;
+
+            box.addEventListener("click", function(){
+                console.log(altTurn)
+
+                // if round is even AND turn is even then player1 plays X
+                if(altRound % 2 == 0 && altTurn % 2 == 0){
+                    placeBlock(player1)
+                } else {
+                    placeBlock(player2 )
+                }
+
+                function placeBlock(player){
+                    altTurn % 2 == 0 ? box.innerHTML = buttons.x 
+                    : box.innerHTML = buttons.o;
+
+                    player.push(coordinate)
+
+                    altTurn++;
+                }
+
+            });
             
             grid.append(box)
     
@@ -81,8 +114,8 @@ function gameScreenDOM(){
         let name = document.createElement("div");
         name.setAttribute("id", `p${nr}-name`);
         name.className = `font-m`;
-        nr == 1 ? name.textContent = player1 
-        : name.textContent = player2;
+        nr == 1 ? name.textContent = "player1" 
+        : name.textContent = "player2";
         
         let score = document.createElement("div");
         score.setAttribute("id", `p${nr}-score`);
@@ -103,4 +136,3 @@ function gameScreenDOM(){
 }
 
 body.prepend( gameScreenDOM() )
-
