@@ -63,8 +63,8 @@ function gameScreenDOM(){
             else letter = "C";
     
             let box = document.createElement("div");
-            let coordinate = letter + number;
-            // box.setAttribute("id", coordinate);
+            // let coordinate = letter + number;
+            box.setAttribute("id", letter + number);
     
             counter == 3 ? counter = 1 : counter++;
 
@@ -73,18 +73,9 @@ function gameScreenDOM(){
 
                 // if round is even AND turn is even then player1 plays X
                 if(altRound % 2 == 0 && altTurn % 2 == 0){
-                    placeBlock(player1)
+                    placeBlock(box, player1)
                 } else {
-                    placeBlock(player2 )
-                }
-
-                function placeBlock(player){
-                    altTurn % 2 == 0 ? box.innerHTML = buttons.x 
-                    : box.innerHTML = buttons.o;
-
-                    player.push(coordinate)
-
-                    altTurn++;
+                    placeBlock(box, player2 )
                 }
 
             });
@@ -134,5 +125,72 @@ function gameScreenDOM(){
 
     return gameScreen
 }
+
+function placeBlock(container, player){
+    altTurn % 2 == 0 ? 
+    container.innerHTML = buttons.x : 
+    container.innerHTML = buttons.o;
+
+    player.push(container.id)
+
+    console.log(player1)
+
+    checkWin(player)
+
+    altTurn++;
+}
+
+function checkWin(playerArray){    
+
+    winningCombos.forEach( combo =>{
+        // console.log(combo)
+        console.log( playerArray.includes( combo[0] && combo[1] && combo[2] ) )
+    })
+
+}
+
+const winningCombos = [];
+
+function waysToWin(){
+    let letters = ["A", "B", "C"];
+    let numbers = [1, 2, 3];
+
+    // a1, a2, a3 etc
+    letters.forEach( letter => {
+        let combo = [];
+        numbers.forEach(number =>{
+            combo.push( letter + number )
+        })
+        winningCombos.push([combo])
+    });
+
+    // a1, b1, c1 etc
+    numbers.forEach( number => {
+        let combo = [];
+        letters.forEach(letter =>{
+            combo.push( letter + number )
+        })
+        winningCombos.push([combo])
+    });
+
+    for (let i = 0; i <= 1; i++) {
+        let combo = [];
+
+        if( i == 0){
+            for (let i = 0; i <= 2; i++) {
+                combo.push(letters[i] + numbers[i])
+            }
+        } else {
+            for (let i = 2; i >= 0; i--) {
+                combo.push(letters[i] + numbers[i])
+            } 
+        }
+
+        winningCombos.push(combo)
+    }
+
+}
+
+waysToWin();
 
 body.prepend( gameScreenDOM() )
