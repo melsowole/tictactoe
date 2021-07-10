@@ -17,11 +17,17 @@
     --szM: 25px;
     --szS:15px;
     --szXS:10px;
+
+    --width: 800px;
 }
 
 .font-m{font-size: 18px}
 .font-s{font-size: 14px}
 .font-l{font-size: 36px}
+
+.color-black{color: var(--black)}
+.color-white{color: var(--white)}
+.color-accent{color:var(--accent)}
 
 *{
     margin: 0;
@@ -78,9 +84,8 @@ body{
     background-color: var(--main);
     padding: var(--szM) var(--szS) var(--szS) var(--szS);
     height: 100vh;
-    position: relative;
 
-    max-width: 800px;
+    max-width: var(--width);
     margin: auto;
 }
 
@@ -189,16 +194,21 @@ body main > *{
 
 
 /* // RESET SCREEN SPECIFICS // */
-#reset-screen{
+.black-overlay{
     position: absolute;
-    width: 100%;
+    width: 100vw;
     height: 100%;
     top: 0;
     left: 0;
     background-color: var(--blackOverlay);
+    display: grid;
+    place-content: center;
 }
 
-#reset-screen .card{
+.card{
+    max-width: var(--width);
+    margin: auto;
+
     background-color: var(--white);
     border-radius: 5px;
     padding: var(--szXL) var(--szL);

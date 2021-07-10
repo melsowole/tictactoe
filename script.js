@@ -24,6 +24,12 @@ const winningCombos = [];
 let altTurn = 0;
 let altRound = 0;
 
+const p1Score = document.querySelector("#p1-score");
+const p1Name = document.getElementById("#p1-name");
+
+const p2Score = document.querySelector("#p2-score");
+const p2Name = document.querySelector("#p2-name");
+
 
 function gameScreenDOM(){
     let main = document.createElement("div");
@@ -63,22 +69,13 @@ function createGameMain(){
         let nr = document.createElement("span");
         nr.textContent = altRound + 1;
         nr.setAttribute("id", "round-nr")
-        roundNr.append(nr)
+        roundNr.append(nr);
     
-        let roundInfo =  document.createElement("span");
-        roundInfo.setAttribute("id", "round-info")
-        roundInfo.className = "font-s flex justify-center";
-        roundInfo.textContent = `${ players[0].name }'s turn`;
-    
-        // for visual balance
-        let balancer = document.createElement("span")
-    
-        main.append(roundNr, roundInfo, balancer);
+        main.append(roundNr);
     
         return main
     }
 }
-
 
 function createGrid(){
     let grid = document.createElement("div");
@@ -109,14 +106,17 @@ function createGrid(){
         counter == 3 ? counter = 1 : counter++;
 
         box.addEventListener("click", function(){
-            console.log(altTurn)
-
-            // if round is even AND turn is even then player1 plays X
-            if(altRound % 2 == 0 && altTurn % 2 == 0){
-                placeBlock(box, players[0].moves)
-            } else {
-                placeBlock(box, players[1].moves )
-            }
+           if( box.firstChild ){
+               // do nothing
+           } else {
+               console.log("click")
+                    // if round is even AND turn is even then player1 plays X
+                if(altRound % 2 == 0 && altTurn % 2 == 0){
+                    placeBlock(box, players[0])
+                } else {
+                    placeBlock(box, players[1] )
+                }
+           }
 
         });
         
@@ -156,58 +156,111 @@ function createPlayer(pObj){
     score.setAttribute("id", `p${pObj.id + 1}-score`);
     score.className = `font-l`;
     pObj.id == 0 ? score.textContent = players[0].score 
-    : score.textContent= players[0].score;
+    : score.textContent= players[1].score;
 
     player.append( name, score )
     return player
 }
 
-
-
-
-
-
-
-
-
-
-function placeBlock(container, player){
+function placeBlock(container, pObj){
     altTurn % 2 == 0 ? 
     container.innerHTML = buttons.x : 
     container.innerHTML = buttons.o;
 
-    player.push(container.id)
+    pObj.moves.push(container.id);
 
-    checkWin(player)
+    checkWin(pObj);
 
     altTurn++;
+
+    // if altRound & altTurn are both even / both odd
+    if( (( altRound % 2 == 0 ) && ( altTurn % 2 == 0 )) ||
+        (( altRound % 2 == 1 ) && ( altTurn % 2 == 1 ))  ){
+            if(p1Name.classList.contains("color-accent")){
+                // do nothing
+            } else {
+                // if other name is active, activate it
+                if(p2Name.classList.contains("color-accent")){
+                    p2Name.classList.remove("color-accent");
+                }
+                p1Name.classList.add("color-accent")
+            }
+        } else{
+            if(p2Name.classList.contains("color-accent")){
+                // do nothing
+            } else {
+                if(p1Name.classList.contains("color-accent")){
+                    p1Name.classList.remove("color-accent");
+                }
+
+                p2Name.classList.add("color-accent")
+            }
+        }
+
 }
 
-function checkWin(playerArray){    
-    let winner;
+function checkWin(pObj){    
+    // let winner;
 
-    playerArray == players[0].moves ? 
-    winner = players[0] :
-    winner = players[1];
+    // pObj.moves == players[0].moves ? 
+    // winner = players[0] :
+    // winner = players[1];
 
     winningCombos.forEach( combo =>{
-        if( combo.every( comboValue => playerArray.includes(comboValue)) ){
-            crownWinner(winner)
+        if( combo.every( comboValue => pObj.moves.includes(comboValue)) ){
+            body.prepend( crownWinner(pObj) );
         } 
-
     })
 
 }
 
-function crownWinner() {
-    let main = document.createElement("div")
+function crownWinner(winnerObj){
+    let main = document.createElement("div");
     main.setAttribute("id", "winner-card");
+    main.className = "black-overlay";
 
-    let
+    let card = document.createElement("div");
+    card.className ="card";
+
+    let winnerDec  = document.createElement("div");
+    winnerDec.className = "font-l color-black";
+    winnerDec.textContent = `${winnerObj.name} wins!`
+
+    let button = document.createElement("button");
+    button.textContent = `continue`;
+    button.className = "accent-button";
+    button.addEventListener("click", () => {
+        console.log( winnerObj.score )
+        winnerObj.score++;
+        console.log( winnerObj.score )
+
+        document.getElementById(`p${winnerObj.id + 1}-score`).textContent = winnerObj.score
+        newRound();
+        main.remove();
+    })
+
+    card.append( winnerDec, button )
+    main.append( card )
+
+    return main
 }
 
-function winnerCard(winnerName){
-    // let card = 
+function newRound(){
+    altRound++;
+    altTurn = 0;
+    
+    // reset moves
+    players.forEach( player => {
+        player.moves = []
+    } )
+
+    //wipe board
+    let gridBlocks = document.querySelectorAll("#grid > div")
+    gridBlocks.forEach( block => {
+        if( block.firstChild )
+        block.firstChild.remove()
+    } )
+
 }
 
 function waysToWin(){
