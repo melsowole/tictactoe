@@ -37,3 +37,7 @@ function randomNumber(){
     // generates number between 0 and 9
     return Math.floor( Math.random() * 10 )
 }
+
+
+const audioWin = new Audio('media/audio/win.mp3')
+const audioTie = new Audio('media/audio/tie.mp3')

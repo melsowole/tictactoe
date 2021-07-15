@@ -1,37 +1,5 @@
 "use strict";
 
-const body = document.body;
-
-const audioWin = new Audio('--')
-const audioTie = new Audio('--')
-
-let sound = true;
-
-document.getElementById("top-bar").append()
-
-let players = [
-    {
-        id: 0,
-        name: "Player 1",
-        moves: [],
-        score: 0,
-    },
-
-    {
-        id: 1,
-        name: "Player 2",
-        moves: [],
-        score: 0,
-    }
-
-]
-
-const winningCombos = [];
-waysToWin();
-
-let altTurn = 0;
-let altRound = 0;
-
 const p1Score = document.getElementById("p1-score");
 const p1Name = document.getElementById("p1-name");
 
@@ -206,46 +174,5 @@ function newRound(){
     visGameInfo();
 }
 
-function waysToWin(){
-    let letters = ["A", "B", "C"];
-    let numbers = [1, 2, 3];
-
-    // a1, a2, a3 etc
-    letters.forEach( letter => {
-        let combo = [];
-        numbers.forEach(number =>{
-            combo.push( letter + number )
-        })
-        winningCombos.push( combo )
-    });
-
-    // a1, b1, c1 etc
-    numbers.forEach( number => {
-        let combo = [];
-        letters.forEach(letter =>{
-            combo.push( letter + number )
-        })
-        winningCombos.push( combo )
-    });
-
-    for (let i = 0; i <= 1; i++) {
-        let combo = [];
-        let count = 0;
-
-        if( i == 0){
-            for (let i = 0; i <= 2; i++) {
-                combo.push(letters[i] + numbers[i])
-            }
-        } else {
-            for (let i = 2; i >= 0; i--) {
-                combo.push(letters[i] + numbers[count])
-                count++;
-            } 
-        }
-
-        winningCombos.push(combo)
-    }
-
-}
 
 
