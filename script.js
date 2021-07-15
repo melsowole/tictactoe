@@ -2,6 +2,9 @@
 
 const body = document.body;
 
+const audioWin = new Audio('--')
+const audioTie = new Audio('--')
+
 let players = [
     {
         id: 0,
@@ -20,66 +23,36 @@ let players = [
 ]
 
 const winningCombos = [];
+waysToWin();
 
 let altTurn = 0;
 let altRound = 0;
 
-const p1Score = document.querySelector("#p1-score");
-const p1Name = document.getElementById("#p1-name");
+const p1Score = document.getElementById("p1-score");
+const p1Name = document.getElementById("p1-name");
 
-const p2Score = document.querySelector("#p2-score");
-const p2Name = document.querySelector("#p2-name");
-
-
-function gameScreenDOM(){
-    let main = document.createElement("div");
-    main.setAttribute("id", "game-screen");
+const p2Score = document.getElementById("p2-score");
+const p2Name = document.getElementById("p2-name");
 
 
-    // *----- HEADER -----*
-    let header = document.createElement("header");
-    header.className = `space-between`;
+visGameInfo()
 
-    let matchHistory = document.createElement("div");
-    matchHistory.setAttribute("id", "match-history")
-    matchHistory.className= `flex`;
-    matchHistory.innerHTML = `${buttons.undo} ${buttons.redo}`;
+function visGameInfo(){
+    // changes displayed round nr
+    document.getElementById("round-nr").textContent = altRound + 1;
 
-    header.innerHTML = buttons.settings;
-    header.append( matchHistory )
-    
-
-    main.append( header, createGameMain() )
-    return main
+    // updates dispalyed player score
+    for (let i = 0; i <= 1; i++) {
+        let player = "p" + (i + 1);   
+        document.getElementById(`${player}-score`).textContent = players[i].score;    
+    } 
 }
 
-function createGameMain(){
-    let main = document.createElement("main");
-    main.append( createRounds(), createGrid(), createScores() )
+createGridItems()
 
-    return main
 
-    function createRounds(){
-        let main = document.createElement("div");
-        main.className = "flex rounds-wrapper";
-    
-        let roundNr = document.createElement("span");
-        roundNr.textContent = `Round: `;
-        roundNr.className = `font-s`;
-        let nr = document.createElement("span");
-        nr.textContent = altRound + 1;
-        nr.setAttribute("id", "round-nr")
-        roundNr.append(nr);
-    
-        main.append(roundNr);
-    
-        return main
-    }
-}
-
-function createGrid(){
-    let grid = document.createElement("div");
-    grid.setAttribute("id", "grid");
+function createGridItems(){
+    let grid = document.getElementById("grid");
     setWidthAndHeight()
 
     window.addEventListener('resize', setWidthAndHeight);
@@ -106,60 +79,27 @@ function createGrid(){
         counter == 3 ? counter = 1 : counter++;
 
         box.addEventListener("click", function(){
+
            if( box.firstChild ){
                // do nothing
            } else {
-               console.log("click")
-                    // if round is even AND turn is even then player1 plays X
-                if(altRound % 2 == 0 && altTurn % 2 == 0){
+                // player 1 moves
+                if( (( altRound % 2 == 0 ) && ( altTurn % 2 == 0 )) ||
+                (( altRound % 2 == 1 ) && ( altTurn % 2 == 1 ))  ){
+
                     placeBlock(box, players[0])
-                } else {
-                    placeBlock(box, players[1] )
+
+                } else{ // player 2 moves
+
+                    placeBlock(box, players[1])
                 }
-           }
+            }
 
         });
         
         grid.append(box)
 
     }
-
-    return grid
-}
-
-function createScores(){
-    let main = document.createElement("section");
-    main.setAttribute("id", "scores");
-    main.className = "flex";
-
-    let vs = document.createElement("div");
-    vs.className=`font-m`;
-    vs.textContent = "vs";
-
-    main.append( createPlayer( players[0] ), vs, createPlayer( players[1] ) )
-
-    return main
-}
-
-function createPlayer(pObj){
-    let player = document.createElement("div");
-    player.setAttribute("id", `p${pObj.id + 1}`);
-    player.className = "player";
-
-    let name = document.createElement("div");
-    name.setAttribute("id", `p${pObj.id + 1}-name`);
-    name.className = `font-m`;
-    pObj.id == 0 ? name.textContent = players[0].name 
-    : name.textContent = players[1].name;
-    
-    let score = document.createElement("div");
-    score.setAttribute("id", `p${pObj.id + 1}-score`);
-    score.className = `font-l`;
-    pObj.id == 0 ? score.textContent = players[0].score 
-    : score.textContent= players[1].score;
-
-    player.append( name, score )
-    return player
 }
 
 function placeBlock(container, pObj){
@@ -173,58 +113,51 @@ function placeBlock(container, pObj){
 
     altTurn++;
 
-    // if altRound & altTurn are both even / both odd
-    if( (( altRound % 2 == 0 ) && ( altTurn % 2 == 0 )) ||
-        (( altRound % 2 == 1 ) && ( altTurn % 2 == 1 ))  ){
-            if(p1Name.classList.contains("color-accent")){
-                // do nothing
-            } else {
-                // if other name is active, activate it
-                if(p2Name.classList.contains("color-accent")){
-                    p2Name.classList.remove("color-accent");
-                }
-                p1Name.classList.add("color-accent")
-            }
-        } else{
-            if(p2Name.classList.contains("color-accent")){
-                // do nothing
-            } else {
-                if(p1Name.classList.contains("color-accent")){
-                    p1Name.classList.remove("color-accent");
-                }
+     // player 1 highlight
+     if( (( altRound % 2 == 0 ) && ( altTurn % 2 == 0 )) ||
+     (( altRound % 2 == 1 ) && ( altTurn % 2 == 1 ))  ){
 
-                p2Name.classList.add("color-accent")
-            }
-        }
+         // visual active disp.
+         if(p1Name.classList.contains("active")){
+             // do nothing
+         } else {
+             // if other name is active, activate it
+             if(p2Name.classList.contains("active")){
+                 p2Name.classList.remove("active");
+             }
+             p1Name.classList.add("active")
+         }
+     } else{ // player 2 highlight
+         if(p2Name.classList.contains("active")){
+             // do nothing
+         } else {
+             if(p1Name.classList.contains("active")){
+                 p1Name.classList.remove("active");
+             }
 
+             p2Name.classList.add("active")
+         }
+     }
 }
 
 function checkWin(pObj){    
-    // let winner;
-
-    // pObj.moves == players[0].moves ? 
-    // winner = players[0] :
-    // winner = players[1];
-
     winningCombos.forEach( combo =>{
         if( combo.every( comboValue => pObj.moves.includes(comboValue)) ){
             body.prepend( crownWinner(pObj) );
+            audio.play()
         } 
     })
 
 }
 
 function crownWinner(winnerObj){
-    let main = document.createElement("div");
-    main.setAttribute("id", "winner-card");
-    main.className = "black-overlay";
+    console.log( players[0].moves, players[1].moves )
 
-    let card = document.createElement("div");
-    card.className ="card";
+    let DOM = cardDOM();
 
-    let winnerDec  = document.createElement("div");
-    winnerDec.className = "font-l color-black";
-    winnerDec.textContent = `${winnerObj.name} wins!`
+    let winnerDecl  = document.createElement("div");
+    winnerDecl.className = "font-l color-black";
+    winnerDecl.textContent = `${winnerObj.name} wins!`
 
     let button = document.createElement("button");
     button.textContent = `continue`;
@@ -235,14 +168,16 @@ function crownWinner(winnerObj){
         console.log( winnerObj.score )
 
         document.getElementById(`p${winnerObj.id + 1}-score`).textContent = winnerObj.score
+        
         newRound();
-        main.remove();
+
+        DOM.main.remove();
     })
 
-    card.append( winnerDec, button )
-    main.append( card )
+    DOM.card.append( winnerDecl, button );
+    DOM.main.append(DOM.card)
 
-    return main
+    return DOM.main
 }
 
 function newRound(){
@@ -254,13 +189,15 @@ function newRound(){
         player.moves = []
     } )
 
+
     //wipe board
     let gridBlocks = document.querySelectorAll("#grid > div")
     gridBlocks.forEach( block => {
         if( block.firstChild )
-        block.firstChild.remove()
+        block.innerHTML = ``;
     } )
 
+    visGameInfo();
 }
 
 function waysToWin(){
@@ -305,6 +242,4 @@ function waysToWin(){
 
 }
 
-waysToWin();
 
-body.prepend( gameScreenDOM() )

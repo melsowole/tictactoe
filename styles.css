@@ -18,7 +18,7 @@
     --szS:15px;
     --szXS:10px;
 
-    --width: 800px;
+    --width: 600px;
 }
 
 .font-m{font-size: 18px}
@@ -82,22 +82,17 @@ button:hover{
 
 body{
     background-color: var(--main);
-    padding: var(--szM) var(--szS) var(--szS) var(--szS);
+    padding: 10vh var(--szS) var(--szS) var(--szS);
     height: 100vh;
 
     max-width: var(--width);
     margin: auto;
+
 }
 
 /* gives spacing between main items  */
 body > div > main > *:not(:last-child){
     margin-bottom: var(--szL);
-}
-
-body header{
-    padding-bottom: var(--szL);
-    display: flex;
-    flex-direction: row-reverse;
 }
 
 
@@ -107,8 +102,9 @@ body header{
     gap: var(--szL);
 }
 
-body main > *{
-    margin-bottom: var(--szXS);
+#grid{
+    margin-top: var(--szXS);
+    margin-bottom: var(--szXL);
 }
 
 .rounds-wrapper > *{
@@ -125,7 +121,7 @@ body main > *{
 }
 
 #grid > div{
-    --border: 2px solid var(--white);
+    --border: 5px solid var(--white);
 
     display: grid;
     place-content: center;
@@ -138,7 +134,7 @@ body main > *{
 #grid div:nth-child(6)~div{border-top: var(--border)}
 
 #grid svg{
-    height: 50%;
+    width: 505;
 }
 
 .player{
