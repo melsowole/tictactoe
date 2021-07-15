@@ -5,6 +5,10 @@ const body = document.body;
 const audioWin = new Audio('--')
 const audioTie = new Audio('--')
 
+let sound = true;
+
+document.getElementById("top-bar").append()
+
 let players = [
     {
         id: 0,
@@ -144,7 +148,9 @@ function checkWin(pObj){
     winningCombos.forEach( combo =>{
         if( combo.every( comboValue => pObj.moves.includes(comboValue)) ){
             body.prepend( crownWinner(pObj) );
-            audio.play()
+            if(sound){
+                audio.play()
+            }
         } 
     })
 
