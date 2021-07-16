@@ -199,6 +199,16 @@ body > div > main > *:not(:last-child){
     place-content: center;
 }
 
+.overlay{
+    position: absolute;
+    width: 100vw;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: grid;
+    place-content: center;
+}
+
 .card{
     max-width: var(--width);
     margin: auto;

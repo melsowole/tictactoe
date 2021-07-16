@@ -81,8 +81,6 @@ function placeBlock(container, pObj){
 
     checkWin(pObj);
 
-    altTurn++;
-
      // player 1 highlight
      if( (( altRound % 2 == 0 ) && ( altTurn % 2 == 0 )) ||
      (( altRound % 2 == 1 ) && ( altTurn % 2 == 1 ))  ){
@@ -110,46 +108,47 @@ function placeBlock(container, pObj){
      }
 }
 
-function checkWin(pObj){    
+function checkWin(pObj){  
+    console.log(altTurn)  
+
     winningCombos.forEach( combo =>{
         if( combo.every( comboValue => pObj.moves.includes(comboValue)) ){
-            body.prepend( crownWinner(pObj) );
-            if(sound){
-                audio.play()
-            }
-        } 
-    })
 
+            if(sound){
+                audioWin.play()
+            }
+
+            pObj.score++;
+
+            visGameInfo()
+
+            crownWinner();
+        }     
+        
+    })
+    
+    altTurn++;
+    
+    if(altTurn > 8){
+        audioTie.play();
+        crownWinner()
+    }
 }
 
-function crownWinner(winnerObj){
-    console.log( players[0].moves, players[1].moves )
+function crownWinner(){ 
+    let main = document.createElement("div");
+    main.className = "overlay";
 
-    let DOM = cardDOM();
-
-    let winnerDecl  = document.createElement("div");
-    winnerDecl.className = "font-l color-black";
-    winnerDecl.textContent = `${winnerObj.name} wins!`
-
-    let button = document.createElement("button");
-    button.textContent = `continue`;
-    button.className = "accent-button";
-    button.addEventListener("click", () => {
-        console.log( winnerObj.score )
-        winnerObj.score++;
-        console.log( winnerObj.score )
-
-        document.getElementById(`p${winnerObj.id + 1}-score`).textContent = winnerObj.score
+    main.addEventListener("click", () =>{
+        main.remove()
         
-        newRound();
+        visGameInfo()
 
-        DOM.main.remove();
+        newRound()
     })
 
-    DOM.card.append( winnerDecl, button );
-    DOM.main.append(DOM.card)
+    body.append(main)
 
-    return DOM.main
 }
 
 function newRound(){
