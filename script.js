@@ -8,6 +8,7 @@ const p2Name = document.getElementById("p2-name");
 
 
 visGameInfo()
+createGridItems()
 
 function visGameInfo(){
     // changes displayed round nr
@@ -19,9 +20,6 @@ function visGameInfo(){
         document.getElementById(`${player}-score`).textContent = players[i].score;    
     } 
 }
-
-createGridItems()
-
 
 function createGridItems(){
     let grid = document.getElementById("grid");

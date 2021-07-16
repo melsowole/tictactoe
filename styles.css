@@ -82,7 +82,7 @@ button:hover{
 
 body{
     background-color: var(--main);
-    padding: 10vh var(--szS) var(--szS) var(--szS);
+    padding: 5vh var(--szS) var(--szS) var(--szS);
     height: 100vh;
 
     width: 100%;
@@ -97,8 +97,10 @@ body > div > main > *:not(:last-child){
 }
 
 
-/* // GAME SCREEN SPECIFICS // */
-
+#top-bar{
+    position: relative;
+    margin-bottom: var(--szXL);
+}
 
 #match-history{
     gap: var(--szL);
@@ -115,25 +117,23 @@ body > div > main > *:not(:last-child){
 }
 
 #grid{
+    background-color: var(--white);
+    gap: 5px;
+
     width: 100%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
+    box-sizing: border-box;
 
 }
 
 #grid > div{
-    --border: 5px solid var(--white);
-
+    background-color: var(--main);
     display: grid;
     place-content: center;
     padding: var(--szM);
 }
-#grid div:nth-child(3n){border-left: var(--border)}
-#grid div:nth-child(3n+1){border-right: var(--border)}
-#grid div:nth-child(-n+3){border-bottom: var(--border)}
-#grid div:nth-child(-n+3){border-bottom: var(--border)}
-#grid div:nth-child(6)~div{border-top: var(--border)}
 
 .player{
     flex-grow: 1;
